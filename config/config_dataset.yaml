@@ -1,0 +1,112 @@
+
+# min number of images for each partition
+min_element_training: 1
+min_element_test: 1
+min_element_validation: 1
+
+# partitioning percentage
+percentage_training : 0.70
+percentage_test : 0.15
+percentage_validation : 0.15
+
+# Super-classes
+super_classes:
+    nc: 7
+    names: ['prohibitory', 'danger', 'mandatory', 'priority road', 'give way', 'stop', 'no entry']
+
+classes:
+    nc: 46
+    names: [ 'speed limit 20 (prohibitory)',
+             'speed limit 30 (prohibitory)',
+             'speed limit 50 (prohibitory)',
+             'speed limit 60 (prohibitory)',
+             'speed limit 70 (prohibitory)',
+             'speed limit 80 (prohibitory)',
+             'restriction ends 80 (other)',
+             'speed limit 100 (prohibitory)',
+             'speed limit 120 (prohibitory)',
+             'no overtaking (prohibitory)',
+             'no overtaking (trucks) (prohibitory)',
+             'priority at next intersection (danger)',
+             'priority road (other)',
+             'give way (other)',
+             'stop (other)',
+             'no traffic both ways (prohibitory)',
+             'no trucks (prohibitory)',
+             'no entry (other)',
+             'danger (danger)',
+             'bend left (danger)',
+             'bend right (danger)',
+             'bend (danger)',
+             'uneven road (danger)',
+             'slippery road (danger)',
+             'road narrows (danger)',
+             'construction (danger)',
+             'traffic signal (danger)',
+             'pedestrian crossing (danger)',
+             'school crossing (danger)',
+             'cycles crossing (danger)',
+             'snow (danger)',
+             'animals (danger)',
+             'restriction ends (other)',
+             'go right (mandatory)',
+             'go left (mandatory)',
+             'go straight (mandatory)',
+             'go right or straight (mandatory)',
+             'go left or straight (mandatory)',
+             'keep right (mandatory)',
+             'keep left (mandatory)',
+             'roundabout (mandatory)',
+             'restriction ends (overtaking) (other)',
+             'restriction ends (overtaking (trucks)) (other)',
+             'prohibitory',
+             'danger',
+             'mandatory']
+
+mapping_c_sc:
+    0: 0
+    1: 0
+    2: 0
+    3: 0
+    4: 0
+    5: 0
+    6: 2
+    7: 0
+    8: 0
+    9: 0
+    10: 0
+    11: 1
+    12: 3
+    13: 4
+    14: 5
+    15: 0
+    16: 0
+    17: 6
+    18: 1
+    19: 1
+    20: 1
+    21: 1
+    22: 1
+    23: 1
+    24: 1
+    25: 1
+    26: 1
+    27: 1
+    28: 1
+    29: 1
+    30: 1
+    31: 1
+    32: 2
+    33: 2
+    34: 2
+    35: 2
+    36: 2
+    37: 2
+    38: 2
+    39: 2
+    40: 2
+    41: 2
+    42: 2
+    43: 0
+    44: 1
+    45: 2
