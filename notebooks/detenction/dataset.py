@@ -122,7 +122,6 @@ def print_distribution_histogram():
 
 
 def generate_dataset_mapped():
-    print("Dataset mapping...\n")
     count = 0
     # verify that the folder exists
     if not os.path.exists(dir.source_folder_labels):
@@ -130,9 +129,10 @@ def generate_dataset_mapped():
     else:
         total_iterations = len(os.listdir(dir.source_folder_labels))
         # scan files in the folders
-        with tqdm(total=total_iterations, desc="Copia immagini") as pbar:
+        with tqdm(total=total_iterations, desc="Mapping") as pbar:
             for labelname in os.listdir(dir.source_folder_labels):
                 new_content = ""
+                pbar.update(1)
                 if labelname.endswith('.txt'):
                     # open file in read mode and write mode
                     with open(os.path.join(dir.source_folder_labels, labelname), 'r+') as file:
@@ -161,15 +161,13 @@ def generate_dataset_mapped():
                         count += 1
                         new_file.write(new_content)
                     shutil.copy(source_image, destination_image)
-                    #print(f"New file '{path_new_label}' created and saved in the folder '{dir.destination_folder_labels}'.")
-                    #print(f"New file '{destination_image}' created and saved in the folder '{dir.destination_folder_images}'.")
-                pbar.update(1)
-    print("They were created", count, "new files in", dir.destination_folder_labels)
-    print("They were created", count, "new files in", dir.destination_folder_images)
+                    # print(f"New file '{path_new_label}' created and saved in the folder '{dir.destination_folder_labels}'.")
+                    # print(f"New file '{destination_image}' created and saved in the folder '{dir.destination_folder_images}'.")
+    #print("They were created", count, "new files in", dir.destination_folder_labels)
+    #print("They were created", count, "new files in", dir.destination_folder_images)
 
 
 def stratified_sampling():
-    print("Stratified sampling...\n")
     dataset_path = Path(dir.destination_folder_labels)
     labels = sorted(dataset_path.rglob("*.txt"))
     indx = [l.stem for l in labels]
@@ -194,7 +192,7 @@ def stratified_sampling():
     # seed random
     random.seed(42)
     # partition the images that have signs
-    with tqdm(total=len(classes_key_orderd_for_freq), desc="Copia immagini") as pbar:
+    with tqdm(total=len(classes_key_orderd_for_freq), desc="Stratified sampling") as pbar:
         for class_idx in classes_key_orderd_for_freq:
             df_class_idx = labels_df.loc[labels_df[class_idx] != 0.0][class_idx]
             filenames = set(df_class_idx.index)
@@ -229,24 +227,13 @@ def stratified_sampling():
     return partitions_for_each_class
 
 
-def prova(partitions_for_each_class):
-    total_iterations = sum(len(partitions) for partitions in partitions_for_each_class)
-    with tqdm(total=total_iterations, desc="Prova") as pbar:
-        for class_id, partitions in enumerate(partitions_for_each_class):
-            a = 1 + 1
-
-
-def create_splitted_dataset(partitions_for_each_class):
-    #print("Dataset generation...It will take a few minutes...")
+def generate_dataset_for_yolo():
+    dir.create_folders()
+    generate_dataset_mapped()
+    partitions_for_each_class = stratified_sampling()
     ext_labels = '.txt'
     ext_images = '.jpg'
-    count_images = 0
-    count_labels = 0
-    count_train = 0
-    count_test = 0
-    count_valid = 0
-    count_images_without_signs = 0
-    # Calcola il numero totale di iterazioni in base alle tue partizioni
+    count_images = count_labels = count_train = count_test = count_valid = 0
     total_iterations = len(partitions_for_each_class)
     with tqdm(total=total_iterations, desc="Dataset generation") as pbar2:
         # copio i file txt e le immagini con cartelli nelle cartelle giuste
@@ -273,7 +260,7 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_train_images)
                 shutil.copy(source_path_image, dir.destination_folder_sampling_train_images)
-                #print("Copy file ", source_path_image, "in to", destination_path_image)
+                # print("Copy file ", source_path_image, "in to", destination_path_image)
                 count_images += 1
                 count_train += 1
                 # labels
@@ -283,7 +270,7 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_train_labels)
                 shutil.copy(source_path_label, dir.destination_folder_sampling_train_labels)
-                #print("Copy file ", source_path_label, "in to", destination_path_label)
+                # print("Copy file ", source_path_label, "in to", destination_path_label)
                 count_labels += 1
 
             # test
@@ -296,7 +283,7 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_test_images)
                 shutil.copy(source_path_image, dir.destination_folder_sampling_test_images)
-                #print("Copy file ", source_path_image, "in to", destination_path_image)
+                # print("Copy file ", source_path_image, "in to", destination_path_image)
                 count_images += 1
                 count_test += 1
                 # labels
@@ -306,7 +293,7 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_test_labels)
                 shutil.copy(source_path_label, dir.destination_folder_sampling_test_labels)
-                #print("Copy file ", source_path_label, "in to", destination_path_label)
+                # print("Copy file ", source_path_label, "in to", destination_path_label)
                 count_labels += 1
 
             # valid
@@ -319,7 +306,7 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_valid_images)
                 shutil.copy(source_path_image, dir.destination_folder_sampling_valid_images)
-                #print("Copy file ", source_path_image, "in to", destination_path_image)
+                # print("Copy file ", source_path_image, "in to", destination_path_image)
                 count_images += 1
                 count_valid += 1
                 # labels
@@ -329,14 +316,14 @@ def create_splitted_dataset(partitions_for_each_class):
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_valid_labels)
                 shutil.copy(source_path_label, dir.destination_folder_sampling_valid_labels)
-                #print("Copy file ", source_path_label, "in to", destination_path_label)
+                # print("Copy file ", source_path_label, "in to", destination_path_label)
                 count_labels += 1
             # Aggiorna la barra di avanzamento
             pbar2.update(1)
 
     # output
-    print(count_images, "images were copied")
-    print(count_labels, "labels were copied")
-    print(count_train, "training files were copied")
-    print(count_test, "test files were copied")
-    print(count_valid, "validation files were copied")
+    #print(count_images, "images were copied")
+    #print(count_labels, "labels were copied")
+    #print(count_train, "training files were copied")
+    #print(count_test, "test files were copied")
+    #print(count_valid, "validation files were copied")
