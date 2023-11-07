@@ -1,23 +1,24 @@
 import yaml
-import os
-import dataset
-from tqdm import tqdm
 
 # pathes
 CONFIGURATION_FILE = "../../config/config_dir_classification.yaml"
 
 source_folder = None
 destination_folder = None
+destination_classification = None
+
 
 def read_config_file():
     global source_folder
     global destination_folder
+    global destination_classification
     # read yaml file
     with open(CONFIGURATION_FILE, 'r') as yaml_file:
         config_data = yaml.safe_load(yaml_file)
     # initialize patches
     source_folder = config_data['source_folder']
     destination_folder = config_data['destination_folder']
+    destination_classification = destination_folder + '/Traffic Sign Classification'
     print_info_directories()
 
 

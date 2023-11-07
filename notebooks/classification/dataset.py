@@ -109,8 +109,12 @@ def print_distribution_histogram():
 
 
 def create_folders():
-    destination_test_folder = dir.destination_folder + '/Test'
+    destination_classification = dir.destination_folder + '/Traffic Sign Classification'
+    os.makedirs(destination_classification, exist_ok=True)
+    destination_test_folder = destination_classification + '/test'
+    destination_train_folder = destination_classification + '/train'
     os.makedirs(destination_test_folder, exist_ok=True)
+    os.makedirs(destination_train_folder, exist_ok=True)
     # directory delle classi
     for i in range(0, num_classes):
         path = Path(destination_test_folder + '/' + str(i))
@@ -118,10 +122,17 @@ def create_folders():
 
 def generate_dataset_for_yolo():
     source_train_folder = dir.source_folder + '/Train'
-    destination_test_folder = dir.destination_folder + '/test'
+    destination_test_folder = dir.destination_classification + '/test'
     count = 0
     create_folders()
-    with tqdm(total=num_classes, desc="Test set generation\t\t") as pbar:
+    with tqdm(total=num_classes, desc="Training set generation") as pbar:
+        for elem in range(0, num_classes):
+            source = source_train_folder + '/' + str(elem)
+            destination = dir.destination_classification + '/train/' + str(elem)
+            shutil.copytree(source, destination)
+            # update bar
+            pbar.update(1)
+    with tqdm(total=num_classes, desc="Test set generation") as pbar:
         for class_id in range(0, num_classes):
             for elem in instances[class_id]:
                 source = dir.source_folder + '/' + elem
@@ -130,11 +141,5 @@ def generate_dataset_for_yolo():
                 count += 1
             # update bar
             pbar.update(1)
-    with tqdm(total=num_classes, desc="Training set generation\t\t") as pbar:
-        for elem in range(0, num_classes):
-            source = source_train_folder + '/' + str(elem)
-            destination = dir.destination_folder + '/train/' + str(elem)
-            shutil.copytree(source, destination)
-            # update bar
-            pbar.update(1)
+
 

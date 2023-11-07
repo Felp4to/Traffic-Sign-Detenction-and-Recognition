@@ -13,15 +13,15 @@ destination_folder = None
 destination_folder_images = None
 destination_folder_labels = None
 destination_folder_sampling = None
-destination_folder_sampling_train = None
-destination_folder_sampling_test = None
-destination_folder_sampling_valid = None
-destination_folder_sampling_train_images = None
-destination_folder_sampling_train_labels = None
-destination_folder_sampling_test_images = None
-destination_folder_sampling_test_labels = None
-destination_folder_sampling_valid_images = None
-destination_folder_sampling_valid_labels = None
+destination_folder_train = None
+destination_folder_test = None
+destination_folder_valid = None
+destination_folder_train_images = None
+destination_folder_train_labels = None
+destination_folder_test_images = None
+destination_folder_test_labels = None
+destination_folder_valid_images = None
+destination_folder_valid_labels = None
 
 
 def read_config_file():
@@ -32,35 +32,35 @@ def read_config_file():
     global destination_folder_images
     global destination_folder_labels
     global destination_folder_sampling
-    global destination_folder_sampling_train
-    global destination_folder_sampling_test
-    global destination_folder_sampling_valid
-    global destination_folder_sampling_train_images
-    global destination_folder_sampling_train_labels
-    global destination_folder_sampling_test_images
-    global destination_folder_sampling_test_labels
-    global destination_folder_sampling_valid_images
-    global destination_folder_sampling_valid_labels
+    global destination_folder_train
+    global destination_folder_test
+    global destination_folder_valid
+    global destination_folder_train_images
+    global destination_folder_train_labels
+    global destination_folder_test_images
+    global destination_folder_test_labels
+    global destination_folder_valid_images
+    global destination_folder_valid_labels
     # read yaml file
     with open(CONFIGURATION_FILE, 'r') as yaml_file:
         config_data = yaml.safe_load(yaml_file)
     # initialize pathes
     source_folder = config_data['source_folder']
-    destination_folder = config_data['destination_folder']
+    destination_folder = config_data['destination_folder'] + '/Traffic Sign Detenction'
     source_folder_images = source_folder + '/images'
     source_folder_labels = source_folder + '/labels'
     destination_folder_images = destination_folder + '/images'
     destination_folder_labels = destination_folder + '/labels'
     destination_folder_sampling = destination_folder + '/stratified_sampling/'
-    destination_folder_sampling_train = destination_folder_sampling + '/train'
-    destination_folder_sampling_test = destination_folder_sampling + '/test'
-    destination_folder_sampling_valid = destination_folder_sampling + '/valid'
-    destination_folder_sampling_train_images = destination_folder_sampling_train + '/images'
-    destination_folder_sampling_train_labels = destination_folder_sampling_train + '/labels'
-    destination_folder_sampling_test_images = destination_folder_sampling_test + '/images'
-    destination_folder_sampling_test_labels = destination_folder_sampling_test + '/labels'
-    destination_folder_sampling_valid_images = destination_folder_sampling_valid + '/images'
-    destination_folder_sampling_valid_labels = destination_folder_sampling_valid + '/labels'
+    destination_folder_train = destination_folder + '/train'
+    destination_folder_test = destination_folder + '/test'
+    destination_folder_valid = destination_folder + '/valid'
+    destination_folder_train_images = destination_folder_train + '/images'
+    destination_folder_train_labels = destination_folder_train + '/labels'
+    destination_folder_test_images = destination_folder_test + '/images'
+    destination_folder_test_labels = destination_folder_test + '/labels'
+    destination_folder_valid_images = destination_folder_valid + '/images'
+    destination_folder_valid_labels = destination_folder_valid + '/labels'
     print_info_directories()
 
 
@@ -72,15 +72,6 @@ def print_info_directories():
     print("destination_folder_images: ", destination_folder_images)
     print("destination_folder_labels: ", destination_folder_labels)
     print("destination_folder_sampling: ", destination_folder_sampling)
-    print("destination_folder_sampling_train: ", destination_folder_sampling_train)
-    print("destination_folder_sampling_test: ", destination_folder_sampling_test)
-    print("destination_folder_sampling_valid: ", destination_folder_sampling_valid)
-    print("destination_folder_sampling_train_images: ", destination_folder_sampling_train_images)
-    print("destination_folder_sampling_train_labels: ", destination_folder_sampling_train_labels)
-    print("destination_folder_sampling_test_images: ", destination_folder_sampling_test_images)
-    print("destination_folder_sampling_test_labels: ", destination_folder_sampling_test_labels)
-    print("destination_folder_sampling_valid_images: ", destination_folder_sampling_valid_images)
-    print("destination_folder_sampling_valid_labels: ", destination_folder_sampling_valid_labels)
 
 
 def create_folders():
@@ -88,16 +79,16 @@ def create_folders():
     os.makedirs(destination_folder_images)
     os.makedirs(destination_folder_sampling)
     # create the folders train, test and valid
-    os.makedirs(destination_folder_sampling_train)
-    os.makedirs(destination_folder_sampling_test)
-    os.makedirs(destination_folder_sampling_valid)
+    os.makedirs(destination_folder_train)
+    os.makedirs(destination_folder_test)
+    os.makedirs(destination_folder_valid)
     # create the folders images and labels
-    os.makedirs(destination_folder_sampling_train_images)
-    os.makedirs(destination_folder_sampling_train_labels)
-    os.makedirs(destination_folder_sampling_test_images)
-    os.makedirs(destination_folder_sampling_test_labels)
-    os.makedirs(destination_folder_sampling_valid_images)
-    os.makedirs(destination_folder_sampling_valid_labels)
+    os.makedirs(destination_folder_train_images)
+    os.makedirs(destination_folder_train_labels)
+    os.makedirs(destination_folder_test_images)
+    os.makedirs(destination_folder_test_labels)
+    os.makedirs(destination_folder_valid_images)
+    os.makedirs(destination_folder_valid_labels)
     for index in range(int(dataset.num_classes)):
         path_class = destination_folder_sampling + '/' + str(index)
         path_class_train = path_class + '/train'

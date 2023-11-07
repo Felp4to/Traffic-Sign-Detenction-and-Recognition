@@ -221,7 +221,7 @@ def stratified_sampling():
             partitions_for_each_class[class_idx].append(training_set)
             partitions_for_each_class[class_idx].append(test_set)
             partitions_for_each_class[class_idx].append(validation_set)
-            # Aggiorna la barra di avanzamento
+            # update progress bar
             pbar.update(1)
 
     return partitions_for_each_class
@@ -236,31 +236,33 @@ def generate_dataset_for_yolo():
     count_images = count_labels = count_train = count_test = count_valid = 0
     total_iterations = len(partitions_for_each_class)
     with tqdm(total=total_iterations, desc="Dataset generation") as pbar2:
-        # copio i file txt e le immagini con cartelli nelle cartelle giuste
+        # copy all files
         for class_id, partitions in enumerate(partitions_for_each_class):
             class_folder = str(class_id) + '/'
             destination_class_path = os.path.join(dir.destination_folder_sampling, class_folder)
+
             destination_train_path = os.path.join(destination_class_path, 'train/')
             destination_test_path = os.path.join(destination_class_path, 'test/')
             destination_valid_path = os.path.join(destination_class_path, 'valid/')
+
             destination_train_images = os.path.join(destination_train_path, 'images/')
             destination_train_labels = os.path.join(destination_train_path, 'labels/')
+
             destination_test_images = os.path.join(destination_test_path, 'images/')
             destination_test_labels = os.path.join(destination_test_path, 'labels/')
+
             destination_valid_images = os.path.join(destination_valid_path, 'images/')
             destination_valid_labels = os.path.join(destination_valid_path, 'labels/')
 
             # train
             for filename in partitions[0]:
                 # images
-                # aaa.add(filename)
                 file = filename + ext_images
                 source_path_image = os.path.join(dir.destination_folder_images, str(file))
                 destination_path_image = os.path.join(destination_train_images, str(file))
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_train_images)
-                shutil.copy(source_path_image, dir.destination_folder_sampling_train_images)
-                # print("Copy file ", source_path_image, "in to", destination_path_image)
+                shutil.copy(source_path_image, dir.destination_folder_train_images)
                 count_images += 1
                 count_train += 1
                 # labels
@@ -269,21 +271,18 @@ def generate_dataset_for_yolo():
                 destination_path_label = os.path.join(destination_train_labels, str(file))
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_train_labels)
-                shutil.copy(source_path_label, dir.destination_folder_sampling_train_labels)
-                # print("Copy file ", source_path_label, "in to", destination_path_label)
+                shutil.copy(source_path_label, dir.destination_folder_train_labels)
                 count_labels += 1
 
             # test
             for filename in partitions[1]:
                 # images
-                # aaa.add(filename)
                 file = filename + ext_images
                 source_path_image = os.path.join(dir.destination_folder_images, str(file))
                 destination_path_image = os.path.join(destination_test_images, str(file))
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_test_images)
-                shutil.copy(source_path_image, dir.destination_folder_sampling_test_images)
-                # print("Copy file ", source_path_image, "in to", destination_path_image)
+                shutil.copy(source_path_image, dir.destination_folder_test_images)
                 count_images += 1
                 count_test += 1
                 # labels
@@ -292,21 +291,18 @@ def generate_dataset_for_yolo():
                 destination_path_label = os.path.join(destination_test_labels, str(file))
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_test_labels)
-                shutil.copy(source_path_label, dir.destination_folder_sampling_test_labels)
-                # print("Copy file ", source_path_label, "in to", destination_path_label)
+                shutil.copy(source_path_label, dir.destination_folder_test_labels)
                 count_labels += 1
 
             # valid
             for filename in partitions[2]:
                 # images
-                # aaa.add(filename)
                 file = filename + ext_images
                 source_path_image = os.path.join(dir.destination_folder_images, str(file))
                 destination_path_image = os.path.join(destination_valid_images, str(file))
                 shutil.copy(source_path_image, destination_path_image)
                 shutil.copy(source_path_image, destination_valid_images)
-                shutil.copy(source_path_image, dir.destination_folder_sampling_valid_images)
-                # print("Copy file ", source_path_image, "in to", destination_path_image)
+                shutil.copy(source_path_image, dir.destination_folder_valid_images)
                 count_images += 1
                 count_valid += 1
                 # labels
@@ -315,10 +311,9 @@ def generate_dataset_for_yolo():
                 destination_path_label = os.path.join(destination_valid_labels, str(file))
                 shutil.copy(source_path_label, destination_path_label)
                 shutil.copy(source_path_label, destination_valid_labels)
-                shutil.copy(source_path_label, dir.destination_folder_sampling_valid_labels)
-                # print("Copy file ", source_path_label, "in to", destination_path_label)
+                shutil.copy(source_path_label, dir.destination_folder_valid_labels)
                 count_labels += 1
-            # Aggiorna la barra di avanzamento
+            # update progress bar
             pbar2.update(1)
 
     # output
