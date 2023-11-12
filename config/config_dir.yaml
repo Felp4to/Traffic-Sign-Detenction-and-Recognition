@@ -1,3 +1,4 @@
 # pathes
-source_folder: 'C:/Users/Paolo/Desktop/Datasets/Dataset 7000 immagini con distrattori _ 46 classi'
+source_folder_detect: 'C:/Users/Paolo/Desktop/Datasets/Dataset 7000 immagini con distrattori _ 46 classi'
+source_folder_classify: 'C:/Users/Paolo/Desktop/Datasets/Dataset senza distrattori - Traffic Sign Classification - CODICE 1'
 destination_folder: 'C:/Users/Paolo/Desktop/Prova2'

@@ -10,6 +10,7 @@ source_folder_images = None
 source_folder_labels = None
 
 destination_folder = None
+destination_folder2 = None
 destination_folder_images = None
 destination_folder_labels = None
 destination_folder_sampling = None
@@ -27,6 +28,7 @@ destination_folder_valid_labels = None
 def read_config_file():
     global source_folder
     global destination_folder
+    global destination_folder2
     global source_folder_images
     global source_folder_labels
     global destination_folder_images
@@ -45,16 +47,17 @@ def read_config_file():
     with open(CONFIGURATION_FILE, 'r') as yaml_file:
         config_data = yaml.safe_load(yaml_file)
     # initialize pathes
-    source_folder = config_data['source_folder']
+    source_folder = config_data['source_folder_detect']
     destination_folder = config_data['destination_folder'] + '/Traffic Sign Detenction'
+    destination_folder2 = destination_folder + '/Traffic Sign Detenction'
     source_folder_images = source_folder + '/images'
     source_folder_labels = source_folder + '/labels'
     destination_folder_images = destination_folder + '/images'
     destination_folder_labels = destination_folder + '/labels'
     destination_folder_sampling = destination_folder + '/stratified_sampling/'
-    destination_folder_train = destination_folder + '/train'
-    destination_folder_test = destination_folder + '/test'
-    destination_folder_valid = destination_folder + '/valid'
+    destination_folder_train = destination_folder2 + '/train'
+    destination_folder_test = destination_folder2 + '/test'
+    destination_folder_valid = destination_folder2 + '/valid'
     destination_folder_train_images = destination_folder_train + '/images'
     destination_folder_train_labels = destination_folder_train + '/labels'
     destination_folder_test_images = destination_folder_test + '/images'
@@ -75,6 +78,7 @@ def print_info_directories():
 
 
 def create_folders():
+    os.makedirs(destination_folder2)
     os.makedirs(destination_folder_labels)
     os.makedirs(destination_folder_images)
     os.makedirs(destination_folder_sampling)

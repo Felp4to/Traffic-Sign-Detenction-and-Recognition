@@ -8,6 +8,7 @@ from pathlib import Path
 import random
 from collections import Counter
 from tqdm import tqdm
+import ruamel.yaml
 
 CONFIGURATION_FILE = '../../config/config_dataset2.yaml'
 
@@ -227,10 +228,26 @@ def stratified_sampling():
     return partitions_for_each_class
 
 
+def generate_yolo_config():
+    yaml2 = ruamel.yaml.YAML()
+    data = {
+        'path': '/content/drive/MyDrive/Colab Notebooks/Traffic Sign Detenction',
+        'train': 'train/images',
+        'test': 'test/images',
+        'val': 'valid/images',
+        'nc': num_classes,
+        'names': dict_classes
+    }
+    file_path = dir.destination_folder2 + '/config.yaml'
+    with open(file_path, 'w') as file:
+        yaml2.dump(data, file)
+
+
 def generate_dataset_for_yolo():
     dir.create_folders()
     generate_dataset_mapped()
     partitions_for_each_class = stratified_sampling()
+    generate_yolo_config()
     ext_labels = '.txt'
     ext_images = '.jpg'
     count_images = count_labels = count_train = count_test = count_valid = 0
@@ -240,17 +257,13 @@ def generate_dataset_for_yolo():
         for class_id, partitions in enumerate(partitions_for_each_class):
             class_folder = str(class_id) + '/'
             destination_class_path = os.path.join(dir.destination_folder_sampling, class_folder)
-
             destination_train_path = os.path.join(destination_class_path, 'train/')
             destination_test_path = os.path.join(destination_class_path, 'test/')
             destination_valid_path = os.path.join(destination_class_path, 'valid/')
-
             destination_train_images = os.path.join(destination_train_path, 'images/')
             destination_train_labels = os.path.join(destination_train_path, 'labels/')
-
             destination_test_images = os.path.join(destination_test_path, 'images/')
             destination_test_labels = os.path.join(destination_test_path, 'labels/')
-
             destination_valid_images = os.path.join(destination_valid_path, 'images/')
             destination_valid_labels = os.path.join(destination_valid_path, 'labels/')
 
@@ -315,10 +328,3 @@ def generate_dataset_for_yolo():
                 count_labels += 1
             # update progress bar
             pbar2.update(1)
-
-    # output
-    #print(count_images, "images were copied")
-    #print(count_labels, "labels were copied")
-    #print(count_train, "training files were copied")
-    #print(count_test, "test files were copied")
-    #print(count_valid, "validation files were copied")

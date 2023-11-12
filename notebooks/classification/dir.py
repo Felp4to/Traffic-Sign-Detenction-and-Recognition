@@ -1,7 +1,7 @@
 import yaml
 
 # pathes
-CONFIGURATION_FILE = "../../config/config_dir_classification.yaml"
+CONFIGURATION_FILE = "../../config/config_dir.yaml"
 
 source_folder = None
 destination_folder = None
@@ -16,7 +16,7 @@ def read_config_file():
     with open(CONFIGURATION_FILE, 'r') as yaml_file:
         config_data = yaml.safe_load(yaml_file)
     # initialize patches
-    source_folder = config_data['source_folder']
+    source_folder = config_data['source_folder_classify']
     destination_folder = config_data['destination_folder']
     destination_classification = destination_folder + '/Traffic Sign Classification'
     print_info_directories()
