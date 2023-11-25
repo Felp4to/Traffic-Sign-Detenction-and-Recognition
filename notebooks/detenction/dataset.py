@@ -10,7 +10,7 @@ from collections import Counter
 from tqdm import tqdm
 import ruamel.yaml
 
-CONFIGURATION_FILE = '../../config/config_dataset.yaml'
+CONFIGURATION_FILE = '../../config/config_dataset2.yaml'
 
 # minimum number of images
 min_element_training = None
