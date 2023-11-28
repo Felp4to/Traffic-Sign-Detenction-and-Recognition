@@ -47,14 +47,14 @@ Aspettando il completamento delle operazioni, verrà generato il dataset finale,
 
 ## Modelli addestrati
 
-I modelli addestrati sono presenti nella cartella models. Oltre ai modelli sono presenti tutti di dati relativi, raccolti durante i cicli di addestramento, matrice di confusione, andamento delle funzioni di loss, metriche etc..   
+Nella cartella **models** troviamo, oltre ai modelli addestrati, anche tutte le informazioni dei vari test eseguiti. Come i valori delle funzioni di Loss e delle metriche di ogni singolo ciclo di addestramento, le matrici ci confusione e i grafici.   
 Tra i modelli di detenction troviamo:
-    -[train_7_classes_split_60_20_20](models%2Fdetenction%2Ftrain_7_classes_split_60_20_20)
-    -[train_7_classes_split_70_15_15](models%2Fdetenction%2Ftrain_7_classes_split_70_15_15)
-    -[train_7_classes_split_80_10_10](models%2Fdetenction%2Ftrain_7_classes_split_80_10_10)
+    -[train_7_classes_split_60_20_20](models%2Fdetenction%2Ftrain_7_classes_split_60_20_20)  
+    -[train_7_classes_split_70_15_15](models%2Fdetenction%2Ftrain_7_classes_split_70_15_15)  
+    -[train_7_classes_split_80_10_10](models%2Fdetenction%2Ftrain_7_classes_split_80_10_10)  
     -[train_46_classes_split_70_15_15](models%2Fdetenction%2Ftrain_46_classes_split_70_15_15)  
 
 Tra i modelli di classification troviamo:  
-    -[traint_43_classes_split_70_30](models%2Fclassification%2Ftraint_43_classes_split_70_30)  
+    -[traint_43_classes_split_70_30](models%2Fclassification%2Ftraint_43_classes_split_70_30)   
 
 
