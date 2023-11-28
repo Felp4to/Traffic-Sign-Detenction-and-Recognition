@@ -7,8 +7,6 @@ from tqdm import tqdm
 import time
 import random
 
-
-
 ROOT_FOLDER = 'C:/Users/Paolo/Desktop/Prova2/Traffic Sign Detenction/Traffic Sign Detenction/test'
 IMAGES_FOLDER = ROOT_FOLDER + '/images'
 LABELS_FOLDER = ROOT_FOLDER + '/labels'
@@ -108,8 +106,8 @@ def predict(file):
             cords = [round(x) for x in box.xyxy[0].tolist()]
             conf_detect = round(box.conf[0].item(), 2)
             crop_predict = crop_image(path, cords)
-            # crop_predict.show()
-            results2 = model_classify(crop_image(path, cords), verbose=False)
+            crop_predict.show()
+            results2 = model_classify(crop_image(path, cords), conf=0.7, verbose=False)
             key = results2[0].probs.top1
             conf_classify = results2[0].probs.top1conf
             conf_classify = conf_classify.item()
@@ -123,7 +121,7 @@ def predict(file):
 def generate_dataframe(files):
     df_total = pd.DataFrame(columns=columns)
     total_iterations = len(files)
-    with tqdm(total=total_iterations, desc="Prections") as pbar:
+    with tqdm(total=total_iterations, desc="Predictions") as pbar:
         for file in files:
             df = pd.DataFrame(columns=columns)
             df = generate_dataframe_for_file(file)
@@ -178,7 +176,7 @@ def generate_dataframe_for_file(file):
         # add line
         new_row = [image_path, filename, superclass_id_predict, superclass_name_predict, cords_predict,
                    None, class_id_predict, None, class_name_predict,
-                   conf_detenct_predict, conf_classify_predict, None, crop_prediction, 'NO LABELED']
+                   conf_detenct_predict, conf_classify_predict, None, crop_prediction, 'NOT LABELED']
         df.loc[len(df)] = new_row
     return df
 
@@ -244,19 +242,50 @@ def metrics(df):
     print("Recall:", recall)
     return precision, recall
 
+
+def create_directories(root):
+    folder_not_detected = root + '/not detected'
+    folder_not_labeled = root + '/not labeled'
+    folder_right = root + '/right predictions'
+    folder_wrong = root + '/wrong predictions'
+    # Crea la cartella se non esiste già
+    if not os.path.exists(folder_not_detected):
+        os.makedirs(folder_not_detected)
+        print(f"Folder '{folder_not_detected}' created successfully!")
+    else:
+        print(f"Folder '{folder_not_detected}' already exist!")
+    if not os.path.exists(folder_not_labeled):
+        os.makedirs(folder_not_labeled)
+        print(f"Folder '{folder_not_labeled}' created successfully!")
+    else:
+        print(f"Folder '{folder_not_labeled}' already exist!")
+    if not os.path.exists(folder_right):
+        os.makedirs(folder_right)
+        print(f"Folder '{folder_right}' created successfully!")
+    else:
+        print(f"Folder '{folder_right}' already exist!")
+    if not os.path.exists(folder_wrong):
+        os.makedirs(folder_wrong)
+        print(f"Folder '{folder_wrong}' created successfully!")
+    else:
+        print(f"Folder '{folder_wrong}' already exist!")
+
+
 def create_pictures(df):
+    path_output = 'C:/Users/Paolo/Desktop/Prova2/Traffic Sign Detenction/Traffic Sign Detenction/test/predizioni'
+    create_directories(path_output)
     files = set()
     files = set(df['filename'])
     total_iterations = len(files)
     with tqdm(total=total_iterations, desc="Draw predictions") as pbar:
         for filename in files:
-            path_output = 'C:/Users/Paolo/Desktop/Prova2/Traffic Sign Detenction/Traffic Sign Detenction/test/predizioni'
             output_file = path_output + '/right predictions/' + filename
             predictions = pd.DataFrame(columns=columns)
             predictions = df[df['filename'] == filename]
             image = Image.open(predictions.iloc[0]['image_path'])
             draw = ImageDraw.Draw(image)
             correct = True
+            noDetected = False
             for index, prediction in predictions.iterrows():
                 if((prediction['instance_state'] == 'RIGHT PREDICTION') or (prediction['instance_state'] == 'WRONG PREDICTION')):
                     if((prediction['instance_state'] == 'WRONG PREDICTION')):
@@ -266,14 +295,39 @@ def create_pictures(df):
                     draw.rectangle(prediction['cords_predict'], outline=color, width=5)
                     c1, c2, c3, c4 = prediction['cords_predict']
                     position_label = (c3 + 5, c2)
-                    position_label2 = (c3 + 5, c2 + 30)
+                    # position_label2 = (c3 + 5, c2 + 30)
                     font = ImageFont.truetype("arial.ttf", 20)
                     label = 'Name: ' + prediction['class_name_predict'] + '\nConf: ' + str(round(prediction['conf_classify_predict'], 4))
                     draw.text(position_label, label, font=font, fill=color, stroke_width=1)
                     #print(prediction)
                     #print(type(prediction['image_path']))
                     #draw_bound(prediction['image_path'], prediction['filename'], prediction['cords_predict'], "red", path_output)
+                elif((prediction['instance_state'] == 'NOT DETECTED')):
+                    noDetected = True
+                    output_file = path_output + '/not detected/' + filename
+                    #color = random_color()
+                    #draw.rectangle(prediction['cords_annotation'], outline=color, width=5)
+                    #c1, c2, c3, c4 = prediction['cords_annotation']
+                    #position_label = (c3 + 5, c2)
+                    # position_label2 = (c3 + 5, c2 + 30)
+                    #font = ImageFont.truetype("arial.ttf", 20)
+                    #label = 'Name: ' + str(prediction['class_id_annotation'])
+                    #draw.text(position_label, label, font=font, fill=color, stroke_width=1)
+                elif((prediction['instance_state'] == 'NOT LABELED')):
+                    output_file = path_output + '/not labeled/' + filename
+                    color = random_color()
+                    draw.rectangle(prediction['cords_predict'], outline=color, width=5)
+                    c1, c2, c3, c4 = prediction['cords_predict']
+                    position_label = (c3 + 5, c2)
+                    # position_label2 = (c3 + 5, c2 + 30)
+                    font = ImageFont.truetype("arial.ttf", 20)
+                    label = 'Name: ' + prediction['class_name_predict'] + '\nConf: ' + str(
+                        round(prediction['conf_classify_predict'], 4))
+                    draw.text(position_label, label, font=font, fill=color, stroke_width=1)
             image.save(output_file)
+            if noDetected == True:
+                output_file = path_output + '/not labeled/' + filename
+                image.save(output_file)
             pbar.update(1)
 
 def random_color():
