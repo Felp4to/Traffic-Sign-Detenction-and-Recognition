@@ -23,11 +23,14 @@ Il repository include le seguenti directories:
 
 I dataset per l'addestramento della rete di rilevamento è reperibile a questo link: https://drive.google.com/drive/folders/1s3aaxcOK5s2pqNI3irhyN-lUpgwZiZ1q?usp=drive_link  
 
-Il dataset per l'addestramento della rete di classificazione è reperibile a questo link: https://drive.google.com/drive/folders/1zMN0YBkUlFeAwOkOJOUiMSdingsAFXTU?usp=drive_link  
+Il dataset per l'addestramento della rete di classificazione è reperibile a questo link: https://drive.google.com/drive/folders/1zMN0YBkUlFeAwOkOJOUiMSdingsAFXTU?usp=drive_link
 
-## Detenction: generazione dei dataset per l'addestramento con YOLOv8
+## File di Configurazione
 
-### File di Configurazione
+[config_dir.yaml](config%2Fconfig_dir.yaml) : una volta scaricati di dataset accertarsi di modificare il file di configurazione delle directories in base alle proprie esigenze.  
 
+[config_ds_detenct.yaml](config%2Fconfig_ds_detenct.yaml) : questo file di configurazione è relativo all'addestramento del modello di Detenction. Permette di settare alcuni parametri
+come le proporzioni delle partizioni di train, test e validation, nonché la mappatura delle etichette.
 
-
+[config_ds_classify.yaml](config%2Fconfig_ds_classify.yaml) : questo file di configurazione è relativo all'addestramento del modello di Classification. Permette di settare alcuni parametri
+come le proporzioni delle partizioni di train e test, nonché la mappatura delle etichette.

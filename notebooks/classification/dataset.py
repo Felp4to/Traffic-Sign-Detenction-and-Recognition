@@ -9,7 +9,7 @@ import dir
 import matplotlib.pyplot as plt
 import random
 
-CONFIGURATION_FILE = '../../config/config_dataset_classification.yaml'
+CONFIGURATION_FILE = '../../config/config_ds_classify.yaml'
 
 # percentage partitions
 percentage_training = None
