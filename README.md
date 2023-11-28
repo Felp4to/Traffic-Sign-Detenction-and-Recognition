@@ -34,3 +34,29 @@ come le proporzioni delle partizioni di train, test e validation, nonché la map
 
 [config_ds_classify.yaml](config%2Fconfig_ds_classify.yaml) : questo file di configurazione è relativo all'addestramento del modello di Classification. Permette di settare alcuni parametri
 come le proporzioni delle partizioni di train e test, nonché la mappatura delle etichette.
+
+## Generazione del dataset per l'addestramento del modello di Detenction
+
+Una volta modificato adeguatamente i file di configurazione appena elencati, è sufficiente eseguire tutti i blocchi del modulo [generate_dataset.ipynb](notebooks%2Fdetenction%2Fgenerate_dataset.ipynb)  
+Aspettando il completamento delle operazioni, verrà generato il dataset finale, pronto per l'addestramento con YOLOv8, nella cartella di destinazione specificata.
+
+## Generazione del dataset per l'addestramento del modulo di Classification 
+
+Una volta modificato adeguatamente i file di configurazione appena elencati, è sufficiente eseguire tutti i blocchi del modulo [generate_dataset.ipynb](notebooks%2Fclassification%2Fgenerate_dataset.ipynb)   
+Aspettando il completamento delle operazioni, verrà generato il dataset finale, pronto per l'addestramento con YOLOv8, nella cartella di destinazione specificata.
+
+## Modelli addestrati
+
+I modelli addestrati sono presenti nella cartella models. Oltre ai modelli sono presenti tutti di dati relativi, raccolti durante i cicli di addestramento, matrice di confusione, andamento delle funzioni di loss, metriche etc..  
+Tra i modelli di detenction troviamo:
+<ul>
+    <li>[train_7_classes_split_60_20_20](models%2Fdetenction%2Ftrain_7_classes_split_60_20_20)</li>
+    <li>[train_7_classes_split_70_15_15](models%2Fdetenction%2Ftrain_7_classes_split_70_15_15)</li>
+    <li>[train_7_classes_split_80_10_10](models%2Fdetenction%2Ftrain_7_classes_split_80_10_10)</li>
+    <li>[train_46_classes_split_70_15_15](models%2Fdetenction%2Ftrain_46_classes_split_70_15_15)</li>
+</ul>
+Tra i modelli di classification troviamo:
+<ul>
+    <li>[traint_43_classes_split_70_30](models%2Fclassification%2Ftraint_43_classes_split_70_30)</li>
+</ul>
+
