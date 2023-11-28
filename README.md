@@ -25,6 +25,10 @@ I dataset per l'addestramento della rete di rilevamento è reperibile a questo l
 
 Il dataset per l'addestramento della rete di classificazione è reperibile a questo link: https://drive.google.com/drive/folders/1zMN0YBkUlFeAwOkOJOUiMSdingsAFXTU?usp=drive_link
 
+## Classi delle istanze
+
+![SEGNALI.png](SEGNALI.png)
+
 ## File di Configurazione
 
 [config_dir.yaml](config%2Fconfig_dir.yaml) : una volta scaricati di dataset accertarsi di modificare il file di configurazione delle directories in base alle proprie esigenze.  
@@ -48,7 +52,7 @@ Aspettando il completamento delle operazioni, verrà generato il dataset finale,
 ## Modelli addestrati
 
 Nella cartella **models** troviamo, oltre ai modelli addestrati, anche tutte le informazioni dei vari test eseguiti. Come i valori delle funzioni di Loss e delle metriche di ogni singolo ciclo di addestramento, le matrici ci confusione e i grafici.   
-Tra i modelli di detenction troviamo:
+Tra i modelli di detenction troviamo:  
     -[train_7_classes_split_60_20_20](models%2Fdetenction%2Ftrain_7_classes_split_60_20_20)  
     -[train_7_classes_split_70_15_15](models%2Fdetenction%2Ftrain_7_classes_split_70_15_15)  
     -[train_7_classes_split_80_10_10](models%2Fdetenction%2Ftrain_7_classes_split_80_10_10)  
@@ -56,5 +60,7 @@ Tra i modelli di detenction troviamo:
 
 Tra i modelli di classification troviamo:  
     -[traint_43_classes_split_70_30](models%2Fclassification%2Ftraint_43_classes_split_70_30)   
+
+
 
 
