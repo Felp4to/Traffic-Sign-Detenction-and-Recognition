@@ -10,7 +10,7 @@ import random
 ROOT_FOLDER = 'C:/Users/Paolo/Desktop/Prova2/Traffic Sign Detenction/Traffic Sign Detenction/test'
 IMAGES_FOLDER = ROOT_FOLDER + '/images'
 LABELS_FOLDER = ROOT_FOLDER + '/labels'
-CLASSIFY_PATH = '../../models/classification/traint_43_classes_split_70_30/weights/best.pt'
+CLASSIFY_PATH = '../../models/classification/train_43_classes_split_70_30/weights/best.pt'
 DETENCT_PATH = '../../models/detenction/train_7_classes_split_70_15_15/weights/best.pt'
 CONFIGURATION_FILE = '../../config/config_classes.yaml'
 
